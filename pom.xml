@@ -1,0 +1,167 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.zhiyun.bigdata</groupId>
+  <artifactId>recommend</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>recommend Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+     <fastjackson.version>2.8.1</fastjackson.version>
+     <jackson.version>1.6.0</jackson.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.8.2</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- spring -->
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-context</artifactId>
+        <version>4.0.3.RELEASE</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-jdbc</artifactId>
+        <version>4.0.3.RELEASE</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-orm</artifactId>
+        <version>4.0.3.RELEASE</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-web</artifactId>
+        <version>4.0.3.RELEASE</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-aop</artifactId>
+        <version>4.0.3.RELEASE</version>
+    </dependency>
+    <dependency>  
+	    <groupId>org.springframework</groupId>  
+	    <artifactId>spring-aspects</artifactId>  
+	    <version>4.0.3.RELEASE</version>  
+	</dependency>
+    <dependency>
+		<groupId>cglib</groupId>
+		<artifactId>cglib</artifactId>
+		<version>2.2.2</version>
+	</dependency>
+    <dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-webmvc</artifactId>
+		<version>4.0.3.RELEASE</version>
+	</dependency>
+	<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-webmvc-portlet</artifactId>
+		<version>4.0.3.RELEASE</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>com.fasterxml.jackson.core</groupId>  
+        <artifactId>jackson-core</artifactId>  
+        <version>${fastjackson.version}</version>
+    </dependency>  
+    <dependency>  
+        <groupId>com.fasterxml.jackson.core</groupId>  
+        <artifactId>jackson-databind</artifactId>  
+        <version>${fastjackson.version}</version>  
+    </dependency>  
+    <dependency>  
+        <groupId>com.fasterxml.jackson.core</groupId>  
+        <artifactId>jackson-annotations</artifactId>  
+        <version>${fastjackson.version}</version>
+    </dependency>
+    
+    <!-- hibernate4.1.2 -->
+    <dependency>
+	  <groupId>org.hibernate</groupId>
+	  <artifactId>hibernate-core</artifactId>
+	  <version>4.1.2.Final</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.hibernate</groupId>
+	  <artifactId>hibernate-ehcache</artifactId>
+	  <version>4.1.2.Final</version>
+	</dependency>
+	<dependency> 
+		<groupId>c3p0</groupId> 
+		<artifactId>c3p0</artifactId> 
+		<version>0.9.1.2</version> 
+		<type>jar</type> 
+		<scope>compile</scope> 
+	</dependency> 
+	<dependency>
+	  <groupId>net.sf.ehcache</groupId>
+	  <artifactId>ehcache</artifactId>
+	  <version>2.8.1</version>
+	</dependency>
+
+	<!-- mysql -->
+	<dependency> 
+		<groupId>mysql</groupId> 
+		<artifactId>mysql-connector-java</artifactId> 
+		<version>5.1.36</version> 
+		<type>jar</type> 
+		<scope>runtime</scope> 
+	</dependency>
+	
+	<!-- Gson -->
+	<dependency>
+		<groupId>com.google.code.gson</groupId>
+		<artifactId>gson</artifactId>
+		<version>2.2.4</version>
+	</dependency>
+	
+	<!-- JSONObject -->
+	<dependency>
+	  <groupId>org.json</groupId>
+	  <artifactId>json</artifactId>
+	  <version>20140107</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>org.apache.httpcomponents</groupId>
+		<artifactId>httpclient</artifactId>
+		<version>4.3</version>
+	</dependency>
+	
+	<dependency>  
+	  <groupId>org.slf4j</groupId>  
+	  <artifactId>slf4j-api</artifactId>  
+	  <version>1.6.6</version>  
+	</dependency> 
+	<dependency>
+		<groupId>org.slf4j</groupId>
+		<artifactId>slf4j-log4j12</artifactId>
+		<version>1.6.6</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.apache.commons</groupId>
+	  <artifactId>commons-lang3</artifactId>
+	  <version>3.5</version>
+	</dependency>
+  </dependencies>
+  <build>
+  	<plugins>
+	    <plugin>
+	        <groupId>org.apache.maven.plugins</groupId>
+	        <artifactId>maven-compiler-plugin</artifactId>
+	        <version>3.1</version>
+	        <configuration>
+	            <source>1.7</source>
+	            <target>1.7</target>
+	        </configuration>
+	    </plugin>
+	  </plugins>
+    <finalName>recommend</finalName>
+  </build>
+</project>
