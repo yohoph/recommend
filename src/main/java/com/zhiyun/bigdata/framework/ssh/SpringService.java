@@ -81,4 +81,18 @@ public class SpringService implements ApplicationContextAware{
 		checkApplicationContext();
 		return (T) applicationContext.getBean(name);
 	}
+	
+	/**
+	 * @author yehao
+	 * @date Nov 10, 2011
+	 * @param <T>
+	 * @param clazz
+	 * @return
+	 * @Description 获得bean对象
+	 */
+	@SuppressWarnings("unchecked")
+	public static <T> T getBean(Class clazz){
+		checkApplicationContext();
+		return (T) applicationContext.getBean(clazz);
+	}
 }
