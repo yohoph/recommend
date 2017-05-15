@@ -12,6 +12,11 @@ public class CalculationConfig {
 	 */
 	private int recNum;
 	
+	/**
+	 * ≥¨ ± ±≥§£®√Î£©
+	 */
+	private long timeOut;
+	
 	public CalculationConfig() {
 		super();
 	}
@@ -36,6 +41,14 @@ public class CalculationConfig {
 
 	public void setRecNum(int recNum) {
 		this.recNum = recNum;
+	}
+
+	public long getTimeOut() {
+		return timeOut;
+	}
+
+	public void setTimeOut(long timeOut) {
+		this.timeOut = timeOut;
 	}
 	
 }

@@ -1,7 +1,13 @@
 package com.zhiyun.bigdata.recommend.calculation;
 
+import java.util.Hashtable;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.Vector;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.zhiyun.bigdata.framework.ssh.SpringService;
 import com.zhiyun.bigdata.framework.ssh.StringUtil;
@@ -11,11 +17,15 @@ import com.zhiyun.bigdata.recommend.service.RecommendService;
 
 public class CalculationManage {
 	
+	private Logger logger = LoggerFactory.getLogger(getClass());
+	
 	RecommendService recommendService = SpringService.getBean(RecommendService.class);
 	
-	List<Result> results = new Vector<>(); //采用同步线程提交数据
+	private List<Result> results = new Vector<>(); //采用同步线程提交数据
 	
-	CalculationConfig config = null;
+	private Map<String, CalculationStatus> resourceStatus = new Hashtable<>();
+	
+	private CalculationConfig config = null;
 	
 	public List<Result> doCalculation(String userId){
 		Page page = new Page(config.getRecNum());
@@ -29,18 +39,48 @@ public class CalculationManage {
 			for (int i = 1; i <= totalPages; i++) {
 				page.setPageNo(i);
 				page = recommendService.getTeachers(page, userId);
-				Resource<Teacher> resource = new TeacherResource(StringUtil.getUUID(), this, getResult(page));
+				String id = "ResourceId:" + StringUtil.getUUID();
+				resourceStatus.put(id, CalculationStatus.READY);
+				Resource<Teacher> resource = new TeacherResource(id, this, getResult(page),userId);
 				Thread thread = new Thread(resource);
 				thread.start();
 			}
 		} else {
-			Resource<Teacher> resource = new TeacherResource(StringUtil.getUUID(), this, getResult(page));
+			String id = "ResourceId:" + StringUtil.getUUID();
+			resourceStatus.put(id, CalculationStatus.READY);
+			Resource<Teacher> resource = new TeacherResource(id, this, getResult(page),userId);
 			Thread thread = new Thread(resource);
 			thread.start();
 		}
+		
+		long currentTime = System.currentTimeMillis();
 		//TODO 线程锁死等待执行结果
-		
-		
+		while(true){
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			long nowTime = System.currentTimeMillis();
+			if ((nowTime - currentTime)/1000 > config.getTimeOut()) {
+				logger.warn("system is time out, the data is " + userId );
+				break;
+			}
+			Set<String> ids = resourceStatus.keySet();
+			int count = 0;
+			for (String id : ids) {
+				CalculationStatus status = resourceStatus.get(id);
+				if(status == CalculationStatus.END){
+					count++;
+				}
+			}
+			if(count >= ids.size()){
+				break;
+			} else {
+				continue;
+			}
+			
+		}
 		return results;
 	}
 	
@@ -55,8 +95,21 @@ public class CalculationManage {
 	}
 	
 	
+	/**
+	 * 执行结果，更新数据
+	 * @param threadResults
+	 */
 	public void addResults(List<Result> threadResults){
 		results.addAll(threadResults);
+	}
+	
+	/**
+	 * 更新执行状态
+	 * @param id
+	 * @param status
+	 */
+	public void updateResource(String id , CalculationStatus status){
+		resourceStatus.put(id, status);
 	}
 	
 }
