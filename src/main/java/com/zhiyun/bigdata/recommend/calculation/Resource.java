@@ -20,11 +20,17 @@ public abstract class Resource<T> extends Observable implements Runnable {
 	@Override
 	public void run() {
 		init();
+		calculationManage.updateResource(id, CalculationStatus.DOING);
 		if(list != null && list.size() > 0){ //еп©у
 			List<Result> results = new ArrayList<>();
 			for (int i = 0; i < list.size(); i++) {
 				logger.info("id:" + id + " execute data current:" + i + " total:" + list.size());
 				Result result = execute(list.get(i));
+				if(result == null){
+					result = new Result();
+					result.setBody(list.get(i).toString());
+					result.setWeight(0);
+				}
 				results.add(result);
 			}
 			writeResult(results);
@@ -66,6 +72,7 @@ public abstract class Resource<T> extends Observable implements Runnable {
 
 	public void writeResult(List<Result> results){
 		calculationManage.addResults(results);
+		calculationManage.updateResource(id, CalculationStatus.END);
 	}
 
 }

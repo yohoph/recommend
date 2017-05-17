@@ -5,17 +5,17 @@ public class CalculationConfig {
 	/**
 	 * 最小线程数(最大推荐数)
 	 */
-	private int minNum;
+	private int minNum = 3;
 	
 	/**
 	 * 每线程并行计算最大条目数
 	 */
-	private int recNum;
+	private int recNum = 30;
 	
 	/**
 	 * 超时时长（秒）
 	 */
-	private long timeOut;
+	private long timeOut = 10;
 	
 	public CalculationConfig() {
 		super();

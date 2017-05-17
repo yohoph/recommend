@@ -8,6 +8,7 @@ import java.util.Vector;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import com.zhiyun.bigdata.framework.ssh.SpringService;
 import com.zhiyun.bigdata.framework.ssh.StringUtil;
@@ -15,6 +16,7 @@ import com.zhiyun.bigdata.framework.utils.Page;
 import com.zhiyun.bigdata.recommend.pojo.Teacher;
 import com.zhiyun.bigdata.recommend.service.RecommendService;
 
+@Component
 public class CalculationManage {
 	
 	private Logger logger = LoggerFactory.getLogger(getClass());
@@ -25,13 +27,20 @@ public class CalculationManage {
 	
 	private Map<String, CalculationStatus> resourceStatus = new Hashtable<>();
 	
-	private CalculationConfig config = null;
+	private CalculationConfig config = new CalculationConfig();
+	
+	public void init(){
+		results = new Vector<>(); //采用同步线程提交数据
+		resourceStatus = new Hashtable<>();
+		config = new CalculationConfig();
+	}
 	
 	public List<Result> doCalculation(String userId){
+		init();
 		Page page = new Page(config.getRecNum());
 		page = recommendService.getTeachers(page, userId);
 		if(getResult(page) == null){
-			return null;
+			return results;
 		}
 		long totalPages = page.getTotalPages();
 		long pageNo = page.getPageNo();
