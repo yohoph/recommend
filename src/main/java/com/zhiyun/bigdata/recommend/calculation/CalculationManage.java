@@ -1,5 +1,9 @@
 package com.zhiyun.bigdata.recommend.calculation;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import com.zhiyun.bigdata.framework.ssh.SpringService;
 import com.zhiyun.bigdata.framework.ssh.StringUtil;
+import com.zhiyun.bigdata.framework.utils.CollectionUtils;
 import com.zhiyun.bigdata.framework.utils.Page;
 import com.zhiyun.bigdata.recommend.pojo.Teacher;
 import com.zhiyun.bigdata.recommend.service.RecommendService;
@@ -90,10 +95,18 @@ public class CalculationManage {
 			}
 			
 		}
-		return results;
+		Collections.sort(results,Collections.reverseOrder());
+		List<Result> myresult = new ArrayList<>();
+		if(!CollectionUtils.isEmpty(results)){
+			int limit = results.size() > config.getTotalNum() ? config.getTotalNum() : results.size();
+			for (int i = 0; i < limit; i++) {
+				myresult.add(results.get(i));
+			}
+		}
+		return myresult;
 	}
 	
-	private List<Teacher> getResult(Page page){
+	private List getResult(Page page){
 		if(page.getResultObj() != null && !page.getResultObj().isEmpty()){
 			return page.getResultObj();
 		}

@@ -9,8 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zhiyun.bigdata.framework.utils.Page;
 import com.zhiyun.bigdata.recommend.dao.RecommendDao;
+import com.zhiyun.bigdata.recommend.pojo.Attention;
 import com.zhiyun.bigdata.recommend.pojo.Course;
 import com.zhiyun.bigdata.recommend.pojo.Order;
+import com.zhiyun.bigdata.recommend.pojo.Student;
+import com.zhiyun.bigdata.recommend.pojo.Teacher;
 import com.zhiyun.bigdata.recommend.service.RecommendService;
 
 @Transactional
@@ -36,5 +39,41 @@ public class RecommendServiceImpl implements RecommendService {
 	public Course getCourse(String courseId) {
 		return recommendDao.getCourse(courseId);
 	}
+
+	@Override
+	public List<Attention> getAttention(String userId) {
+		return recommendDao.getAttention(userId);
+	}
+
+	@Override
+	public Teacher getTeacher(String teacherId) {
+		return recommendDao.getTeacher(teacherId);
+	}
+
+	@Override
+	public long countGradeScan(String gradeId, String userId) {
+		return recommendDao.countGradeScan(gradeId, userId);
+	}
+
+	@Override
+	public long countSubjectScan(String subjectId, String userId) {
+		return recommendDao.countSubjectScan(subjectId, userId);
+	}
+
+	@Override
+	public long sumGradeStayLog(String gradeId, String userId) {
+		return recommendDao.sumGradeStayLog(gradeId, userId);
+	}
+
+	@Override
+	public long sumSubjectStayLog(String subjectId, String userId) {
+		return recommendDao.sumSubjectStayLog(subjectId, userId);
+	}
+
+	@Override
+	public Student getStudent(String studentId) {
+		return recommendDao.getStudent(studentId);
+	}
+
 
 }

@@ -17,6 +17,11 @@ public class CalculationConfig {
 	 */
 	private long timeOut = 10;
 	
+	/**
+	 * 最大推荐数
+	 */
+	private int totalNum = 30;
+	
 	public CalculationConfig() {
 		super();
 	}
@@ -49,6 +54,14 @@ public class CalculationConfig {
 
 	public void setTimeOut(long timeOut) {
 		this.timeOut = timeOut;
+	}
+
+	public int getTotalNum() {
+		return totalNum;
+	}
+
+	public void setTotalNum(int totalNum) {
+		this.totalNum = totalNum;
 	}
 	
 }
