@@ -2,6 +2,7 @@ package com.zhiyun.bigdata.recommend.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +20,13 @@ public class RecommendController {
 	@Autowired
 	private CalculationManage calculationManage;
 	
-	@RequestMapping(value = "/hello", method = {RequestMethod.GET, RequestMethod.OPTIONS})
+	@RequestMapping(value = "/recommend", method = {RequestMethod.GET, RequestMethod.OPTIONS})
 	@ResponseBody
-	public String hello(String hello){
-		List<Result> result = calculationManage.doCalculation("st01");
+	public String recommend(String userId){
+		if(StringUtils.isEmpty(userId)){
+			return StringUtil.getFaildResult("«ÎÃÓ»ÎuserId");
+		}
+		List<Result> result = calculationManage.doCalculation(userId);
 		return StringUtil.parseJsonNoExpose(result);
 	}
 	
